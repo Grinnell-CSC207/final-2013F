@@ -1,5 +1,4 @@
-3a.iv. Hash Table, No Buckets, Linear Probing with Secondary Function
-=====================================================================
+### 3a.iv. Hash Table, No Buckets, Linear Probing with Secondary Function
 
     00: 
     01: 

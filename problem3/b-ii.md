@@ -1,5 +1,4 @@
-3b.ii. Sorting a Heap
-=====================
+### 3b.ii. Sorting a Heap
 
 Original array
 

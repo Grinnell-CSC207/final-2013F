@@ -1,5 +1,4 @@
-3a.i. Hash Table with Buckets
-=============================
+### 3a.i. Hash Table with Buckets
 
     00: 
     01: 

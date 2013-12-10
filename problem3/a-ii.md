@@ -1,5 +1,4 @@
-3a.ii. Hash Table, No Buckets, Linear Probing, Offset 7
-=======================================================
+### 3a.ii. Hash Table, No Buckets, Linear Probing, Offset 7
 
     00: 
     01: 

@@ -1,5 +1,4 @@
-3a.iii. Hash Table, No Buckets, Quadratic Probing
-=================================================
+### 3a.iii. Hash Table, No Buckets, Quadratic Probing
 
     00: 
     01: 

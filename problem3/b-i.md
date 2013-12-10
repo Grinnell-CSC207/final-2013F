@@ -1,5 +1,4 @@
-3b.i. Heapifying an Array
-=========================
+### 3b.i. Heapifying an Array
 
 Original array
 
