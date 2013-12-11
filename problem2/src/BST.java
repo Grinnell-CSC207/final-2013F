@@ -85,7 +85,7 @@ public class BST<K, V> implements Dictionary<K, V> {
     } // set
 
     public void remove(K key) {
-        // STUB
+	// STUB
     } // remove(K)
 
     public void clear() {
@@ -98,7 +98,7 @@ public class BST<K, V> implements Dictionary<K, V> {
      * Add an identical annotation to all of the nodes in the tree.
      */
     public void annotate(Object annotation) {
-        annotate(this.root, annotation);
+	annotate(this.root, annotation);
     } // annotate(Object)
 
     // +-----------+-------------------------------------------------------
@@ -159,11 +159,11 @@ public class BST<K, V> implements Dictionary<K, V> {
      * Annotate all of the nodes at and below node.
      */
     void annotate(BSTNode tree, Object annotation) {
-        if (tree != null) {
-            tree.info = annotation;
-            annotate(tree.smaller, annotation);
-            annotate(tree.larger, annotation);
-        } // annotate(BSTNode, Object)
+	if (tree != null) {
+	    tree.info = annotation;
+	    annotate(tree.smaller, annotation);
+	    annotate(tree.larger, annotation);
+	} // annotate(BSTNode, Object)
     } // annotate(BSTNode, Object)
 
     /**
@@ -178,10 +178,10 @@ public class BST<K, V> implements Dictionary<K, V> {
 	} else {
 	    // Normal case: Print the key/value pair and the subtrees
 	    pen.print(indent + "[" + tree.key + ":" + tree.value + "]");
-            if (tree.info != null) {
-                pen.print(" (" + tree.info + ")");
-            } // if (tree.info != null)
-            pen.println();
+	    if (tree.info != null) {
+		pen.print(" (" + tree.info + ")");
+	    } // if (tree.info != null)
+	    pen.println();
 	    dump(pen, tree.smaller, indent + "    ");
 	    dump(pen, tree.larger, indent + "    ");
 	} // if it's a real node
@@ -257,10 +257,10 @@ public class BST<K, V> implements Dictionary<K, V> {
 	 */
 	V value;
 
-        /**
-         * Additional information.
-         */
-        Object info;
+	/**
+	 * Additional information.
+	 */
+	Object info;
 
 	/**
 	 * The left subtree, which should contain the smaller values.
