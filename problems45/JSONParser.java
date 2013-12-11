@@ -9,7 +9,7 @@
     // +----------------+
 
     public static JSONValue parse(String str) throws Exception {
-        return parse(new StringCS(str));
+        return parse(new StringPI(str));
     } // JSONValue
 
     // +---------+---------------------------------------------------------
@@ -19,39 +19,39 @@
     /**
      * Give up on parsing.
      */
-    static void giveup(CharSequence seq, String reason) throws Exception {
-        throw new Exception(seq.info() + ": " + reason);
-    } // giveup(CharSequence, String)
+    static void giveup(ParseInfo info, String reason) throws Exception {
+        throw new Exception(info.info() + ": " + reason);
+    } // giveup(ParseInfo, String)
 
     /**
-     * Parse the text remaining in a CharSequence.
+     * Parse the text remaining in a ParseInfo.
      *
      * @throws Exception
      *   If it cannot successfully parse.
      */
-    static JSONValue parse(CharSequence seq) throws Exception {
-        seq.skipWhitespace();
+    static JSONValue parse(ParseInfo info) throws Exception {
+        info.skipWhitespace();
         
         // Sanity check
-        if (seq.atEnd()) {
-            giveup(seq, "No JSON objects remain");
+        if (info.atEnd()) {
+            giveup(info, "No JSON objects remain");
         } // if no characters remain
 
         // Decide what to do based on the next character
-        switch (seq.peek()) {
+        switch (info.peek()) {
             // Objects
             case '{':
-                return parseObject(seq);
+                return parseObject(info);
             case '[':
-                return parseArray(seq);
+                return parseArray(info);
             case '"':
-                return parseString(seq);
+                return parseString(info);
             case 'f':
-                return parseConstant(seq, "false", JSONConstant.FALSE);
+                return parseConstant(info, "false", JSONConstant.FALSE);
             case 'n':
-                return parseConstant(seq, "null", JSONConstant.NULL);
+                return parseConstant(info, "null", JSONConstant.NULL);
             case 't':
-                return parseConstant(seq, "true", JSONConstant.TRUE);
+                return parseConstant(info, "true", JSONConstant.TRUE);
             case '-':
             case '0':
             case '1':
@@ -63,9 +63,9 @@
             case '7':
             case '8':
             case '9':
-                return parseNumber(seq);
+                return parseNumber(info);
             default:
-                giveup(seq, "Invalid character: " + seq.peek());
+                giveup(info, "Invalid character: " + info.peek());
                 return null;
         } // switch
      } // charSequence
@@ -73,19 +73,19 @@
      /**
       * Parse an array.
       */
-     public static JSONValue parseArray(CharSequence seq) throws Exception {
+     public static JSONValue parseArray(ParseInfo info) throws Exception {
          // STUB (yeah, not a very small stub, but a stub nonetheless)
 
          // Sanity check
-         if (seq.peek() != '[') {
-             giveup(seq, "Failure to begin an array with open brace");
-         } // if (seq.peek() != '[')
+         if (info.peek() != '[') {
+             giveup(info, "Failure to begin an array with open brace");
+         } // if (info.peek() != '[')
          JSONArray arr = new JSONArray();
-         String start = seq.info();
-         seq.next();
+         String start = info.info();
+         info.next();
          int level = 1;
-         while ((!seq.atEnd()) && (level != 0)) {
-             switch (seq.next()) {
+         while ((!info.atEnd()) && (level != 0)) {
+             switch (info.next()) {
                   case '[':
                       ++level;
                       break;
@@ -99,71 +99,71 @@
 
          // Did we finish the array?
          if (level != 0) {
-              giveup(seq, "Array that begins at " + start + " not finished.");
+              giveup(info, "Array that begins at " + start + " not finished.");
          } // Unfinished array
 
          return arr;
      } // parseArray
 
     /**
-     * See if the next set of characters in the sequence are a
+     * See if the next set of characters in the infouence are a
      * known constant.  If not, throw an exception.
      */
-    public static JSONConstant parseConstant(CharSequence seq, String name,
+    public static JSONConstant parseConstant(ParseInfo info, String name,
             JSONConstant constant) throws Exception {
         char ch;
         for (int i = 0; i < name.length(); i++) {
-            if ((ch = (char) seq.next()) != name.charAt(i)) {
-                giveup(seq, "Invalid character: " + ch);
+            if ((ch = (char) info.next()) != name.charAt(i)) {
+                giveup(info, "Invalid character: " + ch);
             } // if character does not match
         } // for
 
         // We've gotten this far, it must be a match
         return constant;
-    } // parseConstant(CharSequence, String, JSONConstant)
+    } // parseConstant(ParseInfo, String, JSONConstant)
 
     /**
      * Parse a number.  
      */
-    public static JSONNumber parseNumber(CharSequence seq) throws Exception {
+    public static JSONNumber parseNumber(ParseInfo info) throws Exception {
         StringBuffer buf = new StringBuffer();
-        char ch = (char) seq.peek();;
+        char ch = (char) info.peek();;
 
         // Assume that this is called with the appropriate next character
-        buf.append((char) seq.next());
+        buf.append((char) info.next());
 
         // Special case: Negative sign.
-        if ((ch == '-') && (!Character.isDigit(seq.peek()))) {
-            giveup(seq, "Negative sign must be followed by a digit");
+        if ((ch == '-') && (!Character.isDigit(info.peek()))) {
+            giveup(info, "Negative sign must be followed by a digit");
         } // special case  of negative sign with no digits.
 
         // Grab the initial set of digits.
-        while (Character.isDigit(seq.peek())) {
-            buf.append((char) seq.next());
+        while (Character.isDigit(info.peek())) {
+            buf.append((char) info.next());
         } // while
 
         // Is there a fractional portion?
-        if (seq.peek() == '.') {
-            buf.append((char) seq.next());
-            if (!Character.isDigit(seq.peek())) {
-                giveup(seq, "Decimal point must be followed by digit");
+        if (info.peek() == '.') {
+            buf.append((char) info.next());
+            if (!Character.isDigit(info.peek())) {
+                giveup(info, "Decimal point must be followed by digit");
             } // if no followup digit
-            while (Character.isDigit(seq.peek())) {
-                buf.append((char) seq.next());
+            while (Character.isDigit(info.peek())) {
+                buf.append((char) info.next());
             } // while
-        } // if (seq.peek == '.')
+        } // if (info.peek == '.')
 
         // Is there an exponent portion?
-        if ((seq.peek() == 'e') || (seq.peek() == 'E')) {
-            buf.append((char) seq.next());
-            if ((seq.peek() == '-') || (seq.peek() == '+')) {
-                buf.append((char) seq.next());
+        if ((info.peek() == 'e') || (info.peek() == 'E')) {
+            buf.append((char) info.next());
+            if ((info.peek() == '-') || (info.peek() == '+')) {
+                buf.append((char) info.next());
             } // if +/-
-            if (!Character.isDigit(seq.peek())) {
-                giveup(seq, "e must be followed by a digit");
+            if (!Character.isDigit(info.peek())) {
+                giveup(info, "e must be followed by a digit");
             } // if (!isDigit)
-            while (Character.isDigit(seq.peek())) {
-                buf.append((char) seq.next());
+            while (Character.isDigit(info.peek())) {
+                buf.append((char) info.next());
             } // while
         } // if exponent
 
@@ -173,39 +173,39 @@
     /**
      * Parse an object.
      */
-    public static JSONObject parseObject(CharSequence seq) throws Exception {
-        if (seq.peek() != '{') {
-            giveup(seq, "Failure to begin an object with a {");
-        } // if (seq.peek() != '[')
+    public static JSONObject parseObject(ParseInfo info) throws Exception {
+        if (info.peek() != '{') {
+            giveup(info, "Failure to begin an object with a {");
+        } // if (info.peek() != '[')
         JSONObject obj = new JSONObject();
-        String start = seq.info();
-        seq.next();
-        seq.skipWhitespace();
-        while ((!seq.atEnd()) && (seq.peek() != '}')) {
-            JSONString key = parseString(seq);
-            seq.skipWhitespace();
-            if (seq.peek() != ':') {
-                giveup(seq, "Missing : after key " + key.value() + 
+        String start = info.info();
+        info.next();
+        info.skipWhitespace();
+        while ((!info.atEnd()) && (info.peek() != '}')) {
+            JSONString key = parseString(info);
+            info.skipWhitespace();
+            if (info.peek() != ':') {
+                giveup(info, "Missing : after key " + key.value() + 
                         " in object at " + start);
             } // if (if no colon)
-            seq.next();
-            seq.skipWhitespace();
-            JSONValue value = parse(seq);
+            info.next();
+            info.skipWhitespace();
+            JSONValue value = parse(info);
             obj.set(key.value(), value);
-            seq.skipWhitespace();
-            if (seq.peek() == ',') {
-                seq.next();
-                seq.skipWhitespace();
-            } else if (seq.peek() == '}') {
+            info.skipWhitespace();
+            if (info.peek() == ',') {
+                info.next();
+                info.skipWhitespace();
+            } else if (info.peek() == '}') {
                 // Do nothing
             } else {
-                giveup(seq, "Invalid character '" + seq.peek() + "' object");
+                giveup(info, "Invalid character '" + info.peek() + "' object");
             } // if invalid next character
         } // while
-        if (seq.peek() != '}') {
-            giveup(seq, "Failed to end object beginning at " + start);
+        if (info.peek() != '}') {
+            giveup(info, "Failed to end object beginning at " + start);
         } // if no right brace
-        seq.next();
+        info.next();
 
         // And we're done
         return obj;
@@ -214,29 +214,29 @@
     /**
      * Parse a string.
      */
-    public static JSONString parseString(CharSequence seq) throws Exception {
+    public static JSONString parseString(ParseInfo info) throws Exception {
         // Sanity check
-        if (seq.peek() != '"') {
-            giveup(seq, "Failure to begin a string with a \": ");
-        } // if (seq.peek() != '[')
+        if (info.peek() != '"') {
+            giveup(info, "Failure to begin a string with a \": ");
+        } // if (info.peek() != '[')
        
-        String start = seq.info();
-        seq.next();
+        String start = info.info();
+        info.next();
         StringBuffer buf = new StringBuffer();
         char ch = 0;
 
-        while ((!seq.atEnd()) && ((ch = (char) seq.next()) != '"')) {
+        while ((!info.atEnd()) && ((ch = (char) info.next()) != '"')) {
             if (ch != '\\') {
                 buf.append(ch);
             } else { // Backslash case!
                 // Sanity check
-                if (seq.atEnd()) {
-                    giveup(seq, "String that started at " + start + 
+                if (info.atEnd()) {
+                    giveup(info, "String that started at " + start + 
                             " ended with backslash-eof");
-                } // if (seq.atEnd()
+                } // if (info.atEnd()
 
                 // What appears after the backslash
-                switch (ch = (char) seq.next()) {
+                switch (ch = (char) info.next()) {
                     case '"':
                     case '\\': 
                     case '/':
@@ -260,22 +260,22 @@
                     case 'u':
                         StringBuffer number = new StringBuffer();
                         for (int i = 0; i < 4; i++) {
-                            if (seq.atEnd()) {
-                                giveup(seq, "Premature end in " +
+                            if (info.atEnd()) {
+                                giveup(info, "Premature end in " +
                                       "\\u" + number);
                             } // if atend
-                            number.append(seq.next());
+                            number.append(info.next());
                         } // for
                         buf.append((char) Integer.parseInt(number.toString(), 16));
                         break;
                     default:
-                        giveup(seq, "Invalid escape sequence " + "\\" + ch);
+                        giveup(info, "Invalid escape infouence " + "\\" + ch);
                         break;
                 } // switch
             } // if it's a backslash
         } // while
         if (ch != '"') {
-            giveup(seq, "No end quote for string that begins at " + start);
+            giveup(info, "No end quote for string that begins at " + start);
         } // if no end quote
         return new JSONString(buf.toString());
     } // parseString

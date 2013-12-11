@@ -1,9 +1,9 @@
 /**
- * A sequence of characters implemented as a string.
+ * Parsing information, stored in a string.
  *
  * @author Samuel A. Rebelsky 
  */
-public class StringCS implements CharSequence {
+public class StringPI implements ParseInfo {
     // +--------+----------------------------------------------------------
     // | Fields |
     // +--------+
@@ -40,13 +40,13 @@ public class StringCS implements CharSequence {
     /** 
      * Create a new sequence from str.
      */
-    public StringCS(String str) {
+    public StringPI(String str) {
         this.str = str;
         this.len = str.length();
         this.i = 0;
         this.line = 1;
         this.col = 1;
-    } // StringCS(String)
+    } // StringPI(String)
 
     // +-----------+-------------------------------------------------------
     // | Observers |
@@ -96,4 +96,4 @@ public class StringCS implements CharSequence {
             this.next();
         } // while
     } // skipWhitespace
-} // class StringCS
+} // class StringPI

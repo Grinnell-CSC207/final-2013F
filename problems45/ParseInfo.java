@@ -1,7 +1,7 @@
 /**
- * A sequence of characters.
+ * Information for a parser.
  */
-public interface CharSequence {
+public interface ParseInfo {
     // +-----------+-------------------------------------------------------
     // | Observers |
     // +-----------+
@@ -43,4 +43,4 @@ public interface CharSequence {
      * Skip over any whitespace.
      */
     public void skipWhitespace();
-} // interface CharSequence
+} // interface ParseInfo
