@@ -47,6 +47,12 @@ public class ParserExpt {
 		"{\"name\":\"sam\", \"job\":{\"employer\":\"Grinnell\", \"title\":\"Professor\"}, \"alive\":true}");
 	expt(pen,
 		"{\"name\":\"sam\", \"grades\":{\"exam1\":80,\"exam2\":85,\"final\":100},\"letter\":\"B\"}");
+
+        // A few experiments taken from files
+        fileExpt(pen, "../examples/input01.json");
+        fileExpt(pen, "../examples/input02.json");
+        fileExpt(pen, "../examples/input03.json");
+        fileExpt(pen, "../examples/input04.json");
     } // main(String[])
 
     // +---------+---------------------------------------------------------
@@ -56,7 +62,7 @@ public class ParserExpt {
     public static void expt(PrintWriter pen, String json) {
 	pen.println(json + " => ");
 	try {
-	    JSONValue val = JSONParser.parse(json);
+	    JSONValue val = JSONParser.parse(new AltStringPI(json));
 	    pen.println("  " + val.toString());
 	    val.dump(pen, "----");
 	} catch (Exception e) {
@@ -64,4 +70,16 @@ public class ParserExpt {
 	} // try/catch
 	pen.println();
     } // expt(String)
+
+    public static void fileExpt(PrintWriter pen, String fname) {
+        pen.println("*** " + fname + " ***");
+        try {
+            JSONValue val = JSONParser.parse(new FilePI(fname));
+            pen.println("  " + val.toString());
+            val.dump(pen, "");
+        } catch (Exception e) {
+            pen.println("  " + e.toString());
+        } // try/catch
+        pen.println();
+    } // fileExpt(PrintWriter, String)
 } // ParserExpt
