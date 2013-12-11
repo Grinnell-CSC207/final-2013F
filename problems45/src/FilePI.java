@@ -12,9 +12,9 @@ public class FilePI extends ReaderPI {
     // +--------------+
 
     /**
-     * Create a new object from a file.
+     * Create a new ParseInfo object that takes input from a file.
      */
     public FilePI(String fname) throws Exception {
-        super(new BufferedReader(new FileReader(fname)));
+	super(new BufferedReader(new FileReader(fname)));
     } // FilePI(String)
 } // class FilePI

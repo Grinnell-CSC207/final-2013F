@@ -39,7 +39,7 @@ public class ReaderPI implements ParseInfo {
      */
     public ReaderPI(BufferedReader reader) {
 	this.reader = reader;
-        updateBuffer();
+	updateBuffer();
 	this.line = 1;
 	this.col = 1;
     } // ReaderPI(String)
@@ -57,7 +57,7 @@ public class ReaderPI implements ParseInfo {
     } // info()
 
     public int peek() {
-        return this.buf;
+	return this.buf;
     } // peek()
 
     // +----------+--------------------------------------------------------
@@ -65,11 +65,11 @@ public class ReaderPI implements ParseInfo {
     // +----------+
 
     public void close() {
-        try {
+	try {
 	    reader.close();
-        } catch (Exception e) {
-            // If we can't close it, don't do anything.
-        } // try/catch
+	} catch (Exception e) {
+	    // If we can't close it, don't do anything.
+	} // try/catch
     } // close()
 
     public int next() {
@@ -83,7 +83,7 @@ public class ReaderPI implements ParseInfo {
 	    } else {
 		++this.col;
 	    } // if it's not a new line
-            updateBuffer();
+	    updateBuffer();
 	    return ch;
 	} // if !atEnd
     } // next()
@@ -102,11 +102,11 @@ public class ReaderPI implements ParseInfo {
      * Update the buffer with the next input character.
      */
     void updateBuffer() {
-        try {
-            this.buf = reader.read();
-        } catch (Exception e) {
-            this.buf = -1;
-        } // try/catch
+	try {
+	    this.buf = reader.read();
+	} catch (Exception e) {
+	    this.buf = -1;
+	} // try/catch
     } // updateBuffer()
 
 } // class ReaderPI
