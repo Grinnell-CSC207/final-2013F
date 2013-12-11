@@ -38,7 +38,7 @@ public class StringPI implements ParseInfo {
     // +--------------+
 
     /**
-     * Create a new sequence from str.
+     * Create a new ParserInfo struct, with input taken from str.
      */
     public StringPI(String str) {
 	this.str = str;
