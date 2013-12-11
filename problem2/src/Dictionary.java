@@ -38,8 +38,8 @@ public interface Dictionary<K, V> extends Iterable<V> {
     public void set(K key, V value);
 
     /**
-     * Remove the value associated with a particular key.  If
-     * there are no values associated with the * key, does nothing.
+     * Remove the value associated with a particular key. If there are no values
+     * associated with the * key, does nothing.
      */
     public void remove(K key);
 

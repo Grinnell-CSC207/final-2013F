@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Simple linked lists.
- *
+ * 
  * @author Samuel A. Rebelsky
  * @author Anna
  * @author Tate
@@ -95,8 +95,7 @@ public class LinkedList<T> implements Iterable<T> {
     } // advance
 
     /**
-     * Determine if the cursor is at the end of the list, with no next
-     * value.
+     * Determine if the cursor is at the end of the list, with no next value.
      */
     public boolean atEnd(Cursor c) {
 	@SuppressWarnings("unchecked")
@@ -108,48 +107,48 @@ public class LinkedList<T> implements Iterable<T> {
      * Print the list.
      */
     public void dump(PrintWriter pen) {
-        // Special case: Empty list
-        // if (this.front.next == this.front) {
-        if (false) {
-            pen.println("{}");
-        } else {
-            // The list is nonempty
-            boolean started = false;
-            Cursor c = this.front();
-            
-            pen.print("{ ");
-            while (! this.atEnd(c)) {
-                if (!started) {
-                    started = true;
-                } else {
-                    pen.print(", ");
-                } // if/else
-                this.dump(pen, c);
-                try { 
-                    this.advance(c);
-                } catch (Exception e) {
-                    // We should never get an exception.  But if we
-                    // do, it's time to escape the loop.
-                    break;
-                } // try/catch
-            } // while
-            pen.println(" }");
-        } // nonempty list
+	// Special case: Empty list
+	// if (this.front.next == this.front) {
+	if (false) {
+	    pen.println("{}");
+	} else {
+	    // The list is nonempty
+	    boolean started = false;
+	    Cursor c = this.front();
+
+	    pen.print("{ ");
+	    while (!this.atEnd(c)) {
+		if (!started) {
+		    started = true;
+		} else {
+		    pen.print(", ");
+		} // if/else
+		this.dump(pen, c);
+		try {
+		    this.advance(c);
+		} catch (Exception e) {
+		    // We should never get an exception. But if we
+		    // do, it's time to escape the loop.
+		    break;
+		} // try/catch
+	    } // while
+	    pen.println(" }");
+	} // nonempty list
     } // dump(PrintWriter)
 
     /**
      * Print one value in the list.
      */
     public void dump(PrintWriter pen, Cursor c) {
-        try {
-            pen.print(this.get(c));
-            Object info = this.getInfo(c);
-            if (info != null) {
-                pen.print("(" + info + ")");
-            } // if there's information
-        } catch (Exception e) {
-            pen.print("<invalid object>");
-        } // try/catch
+	try {
+	    pen.print(this.get(c));
+	    Object info = this.getInfo(c);
+	    if (info != null) {
+		pen.print("(" + info + ")");
+	    } // if there's information
+	} catch (Exception e) {
+	    pen.print("<invalid object>");
+	} // try/catch
     } // dump(PrintWriter)
 
     // +----------+--------------------------------------------------------
@@ -180,24 +179,24 @@ public class LinkedList<T> implements Iterable<T> {
      * Replace the value immediately after the cursor.
      */
     public void replace(Cursor c, T val) throws Exception {
-        if (this.atEnd(c)) {
-            throw new Exception("Beyond end of list");
-        } // if (this.atEnd(c))
+	if (this.atEnd(c)) {
+	    throw new Exception("Beyond end of list");
+	} // if (this.atEnd(c))
 	@SuppressWarnings("unchecked")
 	CursorLL cll = (CursorLL) c;
-        cll.current.next.value = val;
+	cll.current.next.value = val;
     } // replace(Cursor, T)
 
     /**
-     * Set the info for the value immediately after the cursor 
+     * Set the info for the value immediately after the cursor
      */
     public void setInfo(Cursor c, Object info) throws Exception {
-        if (this.atEnd(c)) {
-            throw new Exception("Beyond end of list");
-        } // if (this.atEnd(c))
+	if (this.atEnd(c)) {
+	    throw new Exception("Beyond end of list");
+	} // if (this.atEnd(c))
 	@SuppressWarnings("unchecked")
 	CursorLL cll = (CursorLL) c;
-        cll.current.next.info = info;
+	cll.current.next.info = info;
     } // setInfo(Cursor, Object)
 
     // +------------+------------------------------------------------------
@@ -208,7 +207,7 @@ public class LinkedList<T> implements Iterable<T> {
      * Mark every node with its distance to the end of the list.
      */
     public void computeDistances() {
-        // STUB
+	// STUB
     } // computeDistances()
 
     // +-----------+-------------------------------------------------------
@@ -217,27 +216,27 @@ public class LinkedList<T> implements Iterable<T> {
 
     public Iterator<T> iterator() {
 	return new Iterator<T>() {
-             NodeLL here = new NodeLL(null, front);
+	    NodeLL here = new NodeLL(null, front);
 
-             public T next() {
-	         if (!this.hasNext()) {
-	             throw new NoSuchElementException();
-	         } // if we've reached the end
-	         this.here = this.here.next;
-	         return this.here.next.value;
-             } // next
+	    public T next() {
+		if (!this.hasNext()) {
+		    throw new NoSuchElementException();
+		} // if we've reached the end
+		this.here = this.here.next;
+		return this.here.next.value;
+	    } // next
 
-             public boolean hasNext() {
-	         return (this.here.next.next != front);
-             } // hasNext
+	    public boolean hasNext() {
+		return (this.here.next.next != front);
+	    } // hasNext
 
-             public void remove() throws UnsupportedOperationException {
-                 // The next element is the thing we've just returned, so skip
-                 // over it.
-                 this.here.next = this.here.next.next;
-                 this.here = new NodeLL(null, this.here);
-             } // remove
-        }; // new Iterator<T>
+	    public void remove() throws UnsupportedOperationException {
+		// The next element is the thing we've just returned, so skip
+		// over it.
+		this.here.next = this.here.next.next;
+		this.here = new NodeLL(null, this.here);
+	    } // remove
+	}; // new Iterator<T>
     } // iterator
 
     // +---------------+---------------------------------------------------
@@ -248,53 +247,53 @@ public class LinkedList<T> implements Iterable<T> {
      * Nodes in the list.
      */
     class NodeLL {
-        /**
-         * The value in the node.
-         */
-        T value;
+	/**
+	 * The value in the node.
+	 */
+	T value;
 
-        /**
-         * Additional information on the node.
-         */
-        Object info;
+	/**
+	 * Additional information on the node.
+	 */
+	Object info;
 
-        /**
-         * The next element in the list.
-         */
-        NodeLL next;
+	/**
+	 * The next element in the list.
+	 */
+	NodeLL next;
 
-        /**
-         * Construct a new node with no successor.
-         */
-        public NodeLL(T val) {
+	/**
+	 * Construct a new node with no successor.
+	 */
+	public NodeLL(T val) {
 	    this(val, null);
-        } // NodeLL(T)
+	} // NodeLL(T)
 
-        /**
-         * Construct a new node with a specified successor.
-         */
-        public NodeLL(T value, NodeLL next) {
+	/**
+	 * Construct a new node with a specified successor.
+	 */
+	public NodeLL(T value, NodeLL next) {
 	    this.value = value;
 	    this.next = next;
-            this.info = null;
-        } // NodeLL(T, NodeLL)
+	    this.info = null;
+	} // NodeLL(T, NodeLL)
     } // class NodeLL
 
     /**
      * Cursors for the linked list.
      */
     class CursorLL implements Cursor {
-        /**
-         * The node that *precedes* the node of interest.
-         */
-        NodeLL current;
+	/**
+	 * The node that *precedes* the node of interest.
+	 */
+	NodeLL current;
 
-        /**
-         * Create a new cursor.
-         */
-        public CursorLL(NodeLL current) {
+	/**
+	 * Create a new cursor.
+	 */
+	public CursorLL(NodeLL current) {
 	    this.current = current;
-        } // CursorLL(NodeLL)
+	} // CursorLL(NodeLL)
     } // class CursorLL
 
 } // LinkedList<T>
