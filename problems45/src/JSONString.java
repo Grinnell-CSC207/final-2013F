@@ -21,7 +21,7 @@ public class JSONString implements JSONValue {
      * Build a new string.
      */
     public JSONString(String str) {
-        this.str = str;
+	this.str = str;
     } // JSONString(String)
 
     // +-----------+-------------------------------------------------------
@@ -32,7 +32,7 @@ public class JSONString implements JSONValue {
      * Get the underlying string.
      */
     String value() {
-        return str;
+	return str;
     } // value()
 
     // +--------+----------------------------------------------------------
@@ -40,8 +40,8 @@ public class JSONString implements JSONValue {
     // +--------+
 
     public void dump(PrintWriter pen, String indent) {
-        pen.print(indent);
-        pen.println(str);
+	pen.print(indent);
+	pen.println(str);
     } // dump(PrintWriter pen)
 
     // +-------------------------+-----------------------------------------
@@ -49,10 +49,10 @@ public class JSONString implements JSONValue {
     // +-------------------------+
 
     public String toString() {
-        return "STRING(" + str + ")";
+	return "STRING(" + str + ")";
     } // toString
 
     public int hashCode() {
-        return str.hashCode();
+	return str.hashCode();
     } // hashCode
 } // JSONString

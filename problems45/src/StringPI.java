@@ -1,7 +1,7 @@
 /**
  * Parsing information, stored in a string.
- *
- * @author Samuel A. Rebelsky 
+ * 
+ * @author Samuel A. Rebelsky
  */
 public class StringPI implements ParseInfo {
     // +--------+----------------------------------------------------------
@@ -21,7 +21,7 @@ public class StringPI implements ParseInfo {
     /**
      * The position in the string.
      */
-    int i;  
+    int i;
 
     /**
      * The line number.
@@ -37,15 +37,15 @@ public class StringPI implements ParseInfo {
     // | Constructors |
     // +--------------+
 
-    /** 
+    /**
      * Create a new sequence from str.
      */
     public StringPI(String str) {
-        this.str = str;
-        this.len = str.length();
-        this.i = 0;
-        this.line = 1;
-        this.col = 1;
+	this.str = str;
+	this.len = str.length();
+	this.i = 0;
+	this.line = 1;
+	this.col = 1;
     } // StringPI(String)
 
     // +-----------+-------------------------------------------------------
@@ -53,19 +53,19 @@ public class StringPI implements ParseInfo {
     // +-----------+
 
     public boolean atEnd() {
-        return this.i >= this.len;
+	return this.i >= this.len;
     } // atEnd()
 
     public String info() {
-        return this.line + "," + this.col;
+	return this.line + "," + this.col;
     } // info()
 
     public int peek() {
-        if (this.atEnd()) {
-            return -1;
-        } else {
-            return this.str.charAt(this.i);
-        } // not at end
+	if (this.atEnd()) {
+	    return -1;
+	} else {
+	    return this.str.charAt(this.i);
+	} // not at end
     } // peek()
 
     // +----------+--------------------------------------------------------
@@ -73,27 +73,27 @@ public class StringPI implements ParseInfo {
     // +----------+
 
     public void close() {
-        // NOOP.
+	// NOOP.
     } // close()
 
     public int next() {
-        if (this.atEnd()) {
-            return -1;
-        } else {
-            int ch = this.str.charAt(this.i++);
-            if (ch == '\n') {
-                ++this.line;
-                this.col = 1;
-            } else {
-                ++this.col;
-            } // if it's not a new line
-            return ch;
-        } // if !atEnd
+	if (this.atEnd()) {
+	    return -1;
+	} else {
+	    int ch = this.str.charAt(this.i++);
+	    if (ch == '\n') {
+		++this.line;
+		this.col = 1;
+	    } else {
+		++this.col;
+	    } // if it's not a new line
+	    return ch;
+	} // if !atEnd
     } // next()
 
     public void skipWhitespace() {
-        while (!this.atEnd() && Character.isWhitespace((char) this.peek())) {
-            this.next();
-        } // while
+	while (!this.atEnd() && Character.isWhitespace((char) this.peek())) {
+	    this.next();
+	} // while
     } // skipWhitespace
 } // class StringPI

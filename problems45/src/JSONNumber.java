@@ -21,11 +21,11 @@ public class JSONNumber implements JSONValue {
      * Create a new number given a string represntation.
      */
     public JSONNumber(String str) {
-        try {
-            this.value = new Double(str);
-        } catch (Exception e) {
-            this.value = Double.NaN;
-        } // try/catch
+	try {
+	    this.value = new Double(str);
+	} catch (Exception e) {
+	    this.value = Double.NaN;
+	} // try/catch
     } // JSONNumber(String)
 
     // +-----------+-------------------------------------------------------
@@ -36,7 +36,7 @@ public class JSONNumber implements JSONValue {
      * Get the numeric value.
      */
     public double doubleValue() {
-        return (double) this.value;
+	return (double) this.value;
     } // doubleValue()
 
     // +--------+----------------------------------------------------------
@@ -44,7 +44,7 @@ public class JSONNumber implements JSONValue {
     // +--------+
 
     public void dump(PrintWriter pen, String indent) {
-        // STUB
+	// STUB
     } // dump(PrintWriter pen)
 
     // +-------------------------+-----------------------------------------
@@ -52,11 +52,11 @@ public class JSONNumber implements JSONValue {
     // +-------------------------+
 
     public int hashCode() {
-        return this.value.hashCode();
+	return this.value.hashCode();
     } // hashCode()
 
     public String toString() {
-        return "NUMBER(" + this.value + ")";
+	return "NUMBER(" + this.value + ")";
     } // toString()
 
 } // JSONNumber

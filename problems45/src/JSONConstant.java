@@ -37,11 +37,11 @@ public class JSONConstant implements JSONValue {
     // +--------------+
 
     /**
-     * Construct the constant with a particular name.  Not intended
-     * for use outside of this class.
+     * Construct the constant with a particular name. Not intended for use
+     * outside of this class.
      */
     private JSONConstant(String name) {
-        this.name = name;
+	this.name = name;
     } // JSONConstant
 
     // +--------+----------------------------------------------------------
@@ -49,7 +49,7 @@ public class JSONConstant implements JSONValue {
     // +--------+
 
     public void dump(PrintWriter pen, String indent) {
-        // STUB
+	// STUB
     } // dump(PrintWriter pen)
 
     // +-------------------------+-----------------------------------------
@@ -57,11 +57,11 @@ public class JSONConstant implements JSONValue {
     // +-------------------------+
 
     public int hashCode() {
-        return this.name.hashCode();
+	return this.name.hashCode();
     } // hashCode
 
     public String toString() {
-        return "CONSTANT(" + this.name + ")";
+	return "CONSTANT(" + this.name + ")";
     } // toString()
 } // class JSONConstant
 

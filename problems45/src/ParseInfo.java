@@ -7,20 +7,20 @@ public interface ParseInfo {
     // +-----------+
 
     /**
-     * Determine if we're at the end of the sequence (that is, no
-     * characters remain).
+     * Determine if we're at the end of the sequence (that is, no characters
+     * remain).
      */
     public boolean atEnd();
 
     /**
-     * Get a human-readable string with helpful information about where 
-     * in the sequence we are.
+     * Get a human-readable string with helpful information about where in the
+     * sequence we are.
      */
     public String info();
 
     /**
-     * Look at the next character in the sequence, but do not advance
-     * the sequence.  Returns -1 if no characters remain in the sequence.
+     * Look at the next character in the sequence, but do not advance the
+     * sequence. Returns -1 if no characters remain in the sequence.
      */
     public int peek();
 
@@ -34,8 +34,8 @@ public interface ParseInfo {
     public void close();
 
     /**
-     * Get the next character in the sequence, advancing beyond that
-     * character.  Returns -1 if no characters remain in the sequence.
+     * Get the next character in the sequence, advancing beyond that character.
+     * Returns -1 if no characters remain in the sequence.
      */
     public int next();
 
