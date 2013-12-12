@@ -18,8 +18,8 @@ public class LinkedList<T> implements Iterable<T> {
 
     /*
      * These are simple, singly-linked lists. Each node has a pointer to the
-     * next node. For fun, convenience, or confusion, we a dummy node at the
-     * front of the list that also serves as the end of the list.
+     * next node. For fun, convenience, or confusion, we keep a dummy node at 
+     * the front of the list that also serves as the end of the list.
      */
 
     // +--------+----------------------------------------------------------
