@@ -58,7 +58,7 @@ public class LLExpt {
     } // buildList()
 
     /**
-     * Anntoate the items with their value mod 3
+     * Annotate the items with their value mod 3
      */
     public static void annotateTriplets(PrintWriter pen, LinkedList<String> list)
 	    throws Exception {
