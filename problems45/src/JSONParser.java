@@ -177,7 +177,7 @@ public class JSONParser {
     public static JSONObject parseObject(ParseInfo info) throws Exception {
 	if (info.peek() != '{') {
 	    giveup(info, "Failure to begin an object with a {");
-	} // if (info.peek() != '[')
+	} // if (info.peek() != '{')
 	JSONObject obj = new JSONObject();
 	String start = info.info();
 	info.next();
